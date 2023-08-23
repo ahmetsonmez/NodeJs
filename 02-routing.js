@@ -1,28 +1,7 @@
-// In this section, request routing is configured manually.
 var http = require("http");
-var fs = require("fs");
+var routes = require("./modules/routes");
 
-var server  = http.createServer((request,response) =>{
-
-    if(request.url == '/'){
-        fs.readFile("pages/index.html",(error,html)=> {
-            response.writeHead(200,{"Content-Type":"text/html"});
-            response.write(html);
-            response.end();
-        });
-    }
-    else if(request.url == '/about'){
-        fs.readFile("pages/about.html",(error,html)=> {
-            response.write(html);
-            response.end();
-        });
-    } else{
-        fs.readFile("pages/notfound.html",(error,html)=> {
-            response.write(html);
-            response.end();
-        });
-    }
-});
+var server  = http.createServer(routes);
 
 server.listen(3000);
 

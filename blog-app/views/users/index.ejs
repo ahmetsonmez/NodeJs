@@ -24,9 +24,9 @@
                     <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
                     Categories
                     </a>
-                    <a href="#" class="list-group-item list-group-item-action">Web Development</a>
-                    <a href="#" class="list-group-item list-group-item-action">Mobile Development</a>
-                    <a href="#" class="list-group-item list-group-item-action">Data Analsys</a>
+                    <% categories.forEach(category => { %>
+                        <a href="#" class="list-group-item list-group-item-action"><%= category %></a>
+                    <% }) %>
                 </div>
             </div>
             <div class="col-md-9">

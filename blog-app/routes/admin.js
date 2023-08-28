@@ -1,20 +1,23 @@
 const routers = require("express").Router();
-const path = require("path");
+
+const data ={
+    "title":"Popular"
+}
 
 routers.use("/blogs/create",function(req,res){
-    res.sendFile(path.join(__dirname,"../views/admin","create.html"));  
+    res.render("admin/create");  
 });
 
 routers.use("/blogs/:blogId",function(req,res){
-    res.sendFile(path.join(__dirname,"../views/admin","edit.html"));    
+    res.render("admin/edit"); 
 });
 
 routers.use("/blogs",function(req,res){
-    res.sendFile(path.join(__dirname,"../views/admin","list.html"));    
+    res.render("admin/list",data);    
 });
 
 routers.use("/",function(req,res){
-    res.sendFile(path.join(__dirname,"../views/admin","list.html"));    
+    res.render("admin/list",data);    
 });
 
 module.exports = routers;

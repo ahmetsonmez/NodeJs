@@ -1,16 +1,19 @@
 const routers = require("express").Router();
-const path = require("path");
+
+const data = {
+    "categories": ["Web Development","Mobile Development","Data Analysis"]
+}
 
 routers.use("/blogs/:blogId",function(req,res){
-    res.sendFile(path.join(__dirname,"../views/users","details.html"));  
+    res.render("users/details");   
 });
 
 routers.use("/blogs",function(req,res){
-    res.sendFile(path.join(__dirname,"../views/users","list.html"));    
+    res.render("users/list");   
 });
 
 routers.use("/",function(req,res){
-    res.sendFile(path.join(__dirname,"../views/users","index.html"));    
+    res.render("users/index",data);    
 });
 
 module.exports = routers;

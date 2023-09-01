@@ -1,18 +1,16 @@
-<% courses.filter(x=>x.Valid).forEach(course => { %>
+<% result.forEach(course => { %>
     <div class="col-md-9">
         <div class="card mb-3">
             <div class="row">
                 <div class="col-md-4">
-                    <img src="/source/images/1.jpg" class="img-fluid" alt="" srcset="">
+                    <img src="/source/images/<%= course.Image %>" class="img-fluid" alt="" srcset="">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
                         <h5 class="card-title">
-                            <%= course.Name %>
+                            <%= course.Title %>
                         </h5>
-                        <p class="card-text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure, ad aliquid. Nemo non maxime laudantium nesciunt molestiae numquam quam. Autem voluptate sed quos excepturi, veniam est magnam consequuntur dignissimos architecto?
-                        </p>
+                        <p class="card-text"> <%= course.Description %>  </p>
                     </div>
                 </div>
             </div>

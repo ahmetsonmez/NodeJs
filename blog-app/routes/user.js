@@ -1,4 +1,5 @@
 const routers = require("express").Router();
+const db = require("../data/db");
 
 const data = {
     "categories": ["Web Development","Mobile Development","Data Analysis"],
@@ -33,7 +34,13 @@ routers.use("/blogs",function(req,res){
 });
 
 routers.use("/",function(req,res){
-    res.render("users/index",data);    
+    db.execute("select * from Blogs where IsValid =1")
+    .then(results => {
+            res.render("users/index",{
+                result : results[0]
+            });    
+        })
+        .catch(err => console.error(err));   
 });
 
 module.exports = routers;

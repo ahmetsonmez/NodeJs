@@ -6,8 +6,6 @@ const adminRouters = require("./routes/admin");
 
 app.set("view engine","ejs");
 
-console.log(app.get("view engine"));
-
 //get static files.
 app.use(express.static(path.join(__dirname,"node_modules")));
 

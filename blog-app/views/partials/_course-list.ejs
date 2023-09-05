@@ -1,6 +1,7 @@
 <% result.forEach(course => { %>
     <div class="col-md-9">
         <div class="card mb-3">
+            <a href="/blogs/<%= course.Id %>">
             <div class="row">
                 <div class="col-md-4">
                     <img src="/source/images/<%= course.Image %>" class="img-fluid" alt="" srcset="">
@@ -14,6 +15,7 @@
                     </div>
                 </div>
             </div>
+        </a>
         </div>
     </div>
 <% }) %>

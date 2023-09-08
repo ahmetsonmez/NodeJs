@@ -1,20 +1,40 @@
 const routers = require("express").Router();
 const db = require("../data/db");
 
+routers.use("/blogs/category/:id",async function(req,res){
+    const categoryId = req.params.id;
+    try {
+        const [blogs,] = await db.execute("select * from Blogs where IsValid =1 and CategoryId=?",[categoryId]);
+        const [categories,] = await db.execute("select * from Categories");
+
+        if(blogs){
+            return  res.render("users/blogs", {
+                  result : blogs,
+                  categories : categories,
+                  selectedCategory : categoryId
+              });  
+          }
+          return res.redirect("/");       
+    } 
+    catch (error) {     
+    }
+});
+
 routers.use("/blogs/:blogId", async function(req,res){
     try {
         const id = req.params.blogId;
         const [blog, ] = await db.execute("select * from Blogs where IsValid =1 and Id=?",[id]);
+        const [categories,] = await db.execute("select * from Categories");
         
         if(blog[0]){
           return  res.render("users/details", {
-                blog : blog[0]
+                blog : blog[0],
+                categories : categories,
+                selectedCategory : null
             });  
         }
 
         return res.redirect("/");
-
-        
     } catch (error) {
         console.error(error);
     }
@@ -33,10 +53,12 @@ routers.use("/", async function(req,res){
         
         res.render("users/index",{
             result : blogs,
-            categories : categories
+            categories : categories,
+            selectedCategory : null
         }); 
 
-    } catch (error) {
+    } 
+    catch (error) {
         console.error(error);
     }
 

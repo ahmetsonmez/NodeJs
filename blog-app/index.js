@@ -6,6 +6,9 @@ const adminRouters = require("./routes/admin");
 
 app.set("view engine","ejs");
 
+//W e add this middleware to get the values in the form body in Object type.
+app.use(express.urlencoded({extended : false}));
+
 //get static files.
 app.use(express.static(path.join(__dirname,"node_modules")));
 

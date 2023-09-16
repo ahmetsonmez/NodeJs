@@ -2,10 +2,40 @@
 <html lang="en">
 <head>
     <%- include('../partials/head') %>
-    <title>List</title>
+    <title><%= title %></title>
 </head>
 <body>
     <%- include('../partials/nav') %>
-    <h1><%= title %></h1>
+    
+    <div class="container mt-3">
+        <h1><%= title %></h1>
+        <div class="row">
+            <table class="table table-sm">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Description</th>
+                    <th>Command</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% blogs.forEach(blog => { %>
+                    <tr>
+                        <th scope="row"><%= blog.Id %></th>
+                        <td><%= blog.Title %></td>
+                        <td><img src="/source/images/<%= blog.Image %>" width="50"></td>
+                        <td><%= blog.Description %></td>
+                        <td>
+                            <a href="/admin/blogs/<%= blog.Id %>" class="btn-primary">Edit</a>
+                            <a href="/admin/blogs/delete/<%= blog.Id %>" class="btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                <% }) %>              
+                </tbody>
+            </table>
+        </div>    
+    </div>
 </body>
 </html>

@@ -10,6 +10,21 @@
     <div class="container mt-3">
         <h1><%= title %></h1>
         <div class="row">
+            <% if (action != "undenfined" && action =="create") { %>            
+                <div class="alert alert-success">
+                    Created Blog!
+                </div>
+            <% } %>
+            <% if (action != "undenfined" && action =="edit") { %>            
+                <div class="alert alert-success">
+                    Updated Blog!
+                </div>
+            <% } %>
+            <% if (action != "undenfined" && action =="delete") { %>            
+                <div class="alert alert-success">
+                    Deleted Blog!
+                </div>
+            <% } %>
             <table class="table table-sm">
                 <thead>
                 <tr>

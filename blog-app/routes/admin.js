@@ -28,7 +28,7 @@ routers.post("/blogs/create",async function(req,res){
         await db.execute("Insert into Blogs(Title,Description,Image,MainPage,IsValid,CategoryId) Values(?,?,?,?,?,?)"
         ,[title,content,picture,mainpage,valid,categoryId]);
 
-        res.redirect("/");
+        res.redirect("/admin/blogs?action=create");
         
     } catch (error) {
         console.error(error);
@@ -73,7 +73,7 @@ routers.post("/blogs/:blogId", async function(req,res){
         await db.execute("UPDATE Blogs SET Title=?,Description=?,Image=?,MainPage=?,IsValid=?,CategoryId=? WHERE Id=?",
         [title,content,picture,mainpage,valid,categoryId,blogId]);
 
-        res.redirect("/admin/blogs");
+        res.redirect("/admin/blogs?action=edit");
 
     } catch (error) {
         console.error(error);
@@ -85,7 +85,8 @@ routers.get("/blogs",async function(req,res){
         const [blogs,] = await db.execute("select  Id,Title,Image,Description from Blogs");
         res.render("admin/list",{
             title : "Blog List",
-            blogs : blogs
+            blogs : blogs,
+            action: req.query.action
         });  
         
     } catch (error) {
@@ -93,13 +94,38 @@ routers.get("/blogs",async function(req,res){
     }     
 });
 
-routers.delete("/blogs/delete/:blogId",async function(req,res){
+routers.get("/blogs/delete/:blogId",async function(req,res){
+    const blogId = req.params.blogId;
+   
+    const [blogs,] = await db.execute("select * from Blogs where Id=?",[blogId]);
 
+    if(blogs[0]){
+       return res.render("admin/blog-delete",{
+            blog : blogs[0]
+        })
+    }
+
+    res.redirect("/admin/blogs");
+   
+});
+
+routers.post("/blogs/delete/:blogId",async function(req,res){
+    try {
+        const blogId = req.body.blogId;
+    
+        await db.execute("Delete from Blogs where Id=?",[blogId]);
+
+        res.redirect("/admin/blogs?action=delete");
+        
+    } catch (error) {
+        console.error(error);
+    } 
 });
 
 routers.use("/",function(req,res){
     res.render("admin/list",{
-        title : title
+        title : title,
+        action: req.query.action
     });    
 });
 

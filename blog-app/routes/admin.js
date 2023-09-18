@@ -1,5 +1,5 @@
 const routers = require("express").Router();
-
+const uploadImage = require("../helpers/upload-image");
 const db = require("../data/db");
 
 routers.get("/blogs/create", async function(req,res){
@@ -14,17 +14,17 @@ routers.get("/blogs/create", async function(req,res){
     
 });
 
-routers.post("/blogs/create",async function(req,res){
+routers.post("/blogs/create", uploadImage.upload.single("picture"),async function(req,res){
 
     const title = req.body.title;
     const content = req.body.content;
-    const picture = req.body.picture;
+    const picture = req.file.filename;
     const mainpage = req.body.mainpage == "on" ? 1 : 0;
     const valid = req.body.valid == "on" ? 1 : 0;
     const categoryId = req.body.categoryId;
 
     try {
-
+        console.log(picture);
         await db.execute("Insert into Blogs(Title,Description,Image,MainPage,IsValid,CategoryId) Values(?,?,?,?,?,?)"
         ,[title,content,picture,mainpage,valid,categoryId]);
 

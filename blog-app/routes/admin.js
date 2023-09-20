@@ -1,6 +1,7 @@
 const routers = require("express").Router();
 const uploadImage = require("../helpers/upload-image");
 const db = require("../data/db");
+const fs = require("fs");
 
 routers.get("/blogs/create", async function(req,res){
     try {
@@ -24,7 +25,6 @@ routers.post("/blogs/create", uploadImage.upload.single("picture"),async functio
     const categoryId = req.body.categoryId;
 
     try {
-        console.log(picture);
         await db.execute("Insert into Blogs(Title,Description,Image,MainPage,IsValid,CategoryId) Values(?,?,?,?,?,?)"
         ,[title,content,picture,mainpage,valid,categoryId]);
 
@@ -60,15 +60,24 @@ routers.get("/blogs/:blogId", async function(req,res){
     }  
 });
 
-routers.post("/blogs/:blogId", async function(req,res){
+routers.post("/blogs/:blogId",uploadImage.upload.single("picture"), async function(req,res){
     try {
         const blogId = req.params.blogId;
         const title = req.body.title;
         const content = req.body.content;
-        const picture = req.body.picture;
+        let picture = req.body.picture;
         const mainpage = req.body.mainpage == "on" ? 1 : 0;
         const valid = req.body.valid == "on" ? 1 : 0;
         const categoryId = req.body.categoryId;
+
+        if(req.file){
+            picture = req.file.filename;
+
+            //drop old image
+            fs.unlink("./public/images/" + req.body.picture, error=>{
+                console.error(error);
+            })
+        }
 
         await db.execute("UPDATE Blogs SET Title=?,Description=?,Image=?,MainPage=?,IsValid=?,CategoryId=? WHERE Id=?",
         [title,content,picture,mainpage,valid,categoryId,blogId]);

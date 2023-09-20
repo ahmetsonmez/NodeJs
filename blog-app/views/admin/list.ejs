@@ -41,7 +41,7 @@
                         <th scope="row"><%= blog.Id %></th>
                         <td><%= blog.Title %></td>
                         <td><img src="/source/images/<%= blog.Image %>" width="50"></td>
-                        <td><%= blog.Description %></td>
+                        <td><%- blog.Description %></td>
                         <td>
                             <a href="/admin/blogs/<%= blog.Id %>" class="btn-primary">Edit</a>
                             <a href="/admin/blogs/delete/<%= blog.Id %>" class="btn-danger">Delete</a>

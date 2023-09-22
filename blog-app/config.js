@@ -3,7 +3,7 @@ const config ={
         host: "localhost",
         user : "root",
         password : "Ahmet123",
-        database : "blogapp"
+        database : "blogDbApp"
     }
 }
 

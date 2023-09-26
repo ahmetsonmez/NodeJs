@@ -4,6 +4,9 @@ const path = require("path");
 const userRouters = require("./routes/user");
 const adminRouters = require("./routes/admin");
 
+const blog = require("./models/blog");
+const category = require("./models/category");
+
 app.set("view engine","ejs");
 
 //W e add this middleware to get the values in the form body in Object type.
@@ -14,6 +17,9 @@ app.use(express.static(path.join(__dirname,"node_modules")));
 
 // use alternate option alias name
 app.use("/source",express.static(path.join(__dirname,"public")));
+
+
+
 
 app.use("/admin",adminRouters);
 app.use(userRouters);
